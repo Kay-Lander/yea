@@ -1,0 +1,23 @@
+<a href="/ideas">Ideas dashboard</a>
+<h1><%= @idea.user.alias %></h1>
+<%= @idea.post %>
+
+
+<h6>People who like this post</h6>
+<% @ideas.each do |idea| %>
+    <table class= "table">
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/users/<%= @user.id %>/"><%= idea.user.alias %></a></td>
+                <td><%= idea.user.name %></td>
+            </tr>
+        </tbody>
+    </table>  
+<% end %>
+

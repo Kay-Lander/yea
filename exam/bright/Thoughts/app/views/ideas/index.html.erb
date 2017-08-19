@@ -1,0 +1,34 @@
+<h1>Hi, <%= current_user.name.titleize %>!</h1>
+<!-- Post Ideas-->
+<div class="col-3">
+    <form action="/ideas" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" />
+
+                <div clas="form-group">
+                    <textarea name="post" id="post" class="form-control"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Idea!</button>
+    </form>
+</div>
+<!-- End Post-->
+
+<!-- Idea shown -->
+<% @ideas.each do |idea| %>
+    <p><a href="/users/<%= @user.id %>/"><%= idea.user.alias %></a> says:</p>
+    <p><%= idea.post %></p>
+    <p><a href="/ideas/<%= current_user.id %>"><%= idea.likes.count %> people like(s)</a> </p>
+    <% unless @ideas_liked_ids.include? idea.id %>
+        <form action="/likes/<%= idea.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="submit" value="like">
+        </form>
+    <% else %>
+        <form action="/likes/<%= idea.id %>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="unlike">
+        </form>
+    <% end %> 
+<% end %>
+<!-- End Idea -->
